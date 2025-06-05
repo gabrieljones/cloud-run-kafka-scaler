@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Simple Gradle wrapper script for demonstration
+# This is NOT a full-featured gradlew, but enough to invoke Gradle if installed
+
+if [ -x "$(dirname "$0")/gradle" ]; then
+  exec "$(dirname "$0")/gradle" "$@"
+fi
+
+gradle "$@"

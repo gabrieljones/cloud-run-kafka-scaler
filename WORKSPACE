@@ -25,22 +25,28 @@ http_archive(
     sha256 = "6157e1e68378532d0241ecd15d3c45f6e5cfd98fc10846045509fb2a7cc9e381",
 )
 
-RULES_JVM_EXTERNAL_TAG = "4.3"
-RULES_JVM_EXTERNAL_SHA = "6274687f6fc5783b589f56a2f1ed60de3ce1f99bc4e8f9edef3de43bdf7c6e74"
-
 http_archive(
-    name = "rules_jvm_external",
-    sha256 = RULES_JVM_EXTERNAL_SHA,
-    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
+    name = "rules_java",
+    sha256 = "17c35cd055ddda90b3f3df8711189da7fb1af8e7091747c0734b5743dc0d3c61",
+    url = "https://github.com/bazelbuild/rules_java/releases/download/8.0.0/rules_java-8.0.0.tar.gz",
 )
 
-load("@rules_jvm_external//:defs.bzl", "maven_install")
+# RULES_JVM_EXTERNAL_TAG = "6.0"
+# RULES_JVM_EXTERNAL_SHA = "c44568854d8bb92fe0f7dd6b1e8957ae65e45e32a058727fcf62aaafbd36f17b"
+
+# http_archive(
+#     name = "rules_jvm_external",
+#     sha256 = RULES_JVM_EXTERNAL_SHA,
+#     strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
+#     url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
+# )
+
+# load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 # Versions need to match otherwise strict deps complains about indirect dependencies
 CLOUD_TASKS_PROTO_VERSION = "2.58.0"
 CLOUD_MONITORING_PROTO_VERSION = "3.61.0"
-PROTOBUF_VERSION = "4.29.3"
+PROTOBUF_VERSION = "4.26.1"
 FLOGGER_VERSION = "0.8"
 
 MAVEN_ARTIFACTS = [
@@ -71,11 +77,11 @@ MAVEN_ARTIFACTS = [
 ]
 
 # Set --enable_workspace=true flag when running bazel build.
-maven_install(
-    name= "maven",
-    artifacts = MAVEN_ARTIFACTS,
-    repositories = [
-        "https://repo1.maven.org/maven2",
-        "https://packages.confluent.io/maven/", # Needed for a dependecy of managed-kafka-auth-login-handler
-    ],
-)
+# maven_install(
+#     name= "maven",
+#     artifacts = MAVEN_ARTIFACTS,
+#     repositories = [
+#         "https://repo1.maven.org/maven2",
+#         "https://packages.confluent.io/maven/", # Needed for a dependecy of managed-kafka-auth-login-handler
+#     ],
+# )

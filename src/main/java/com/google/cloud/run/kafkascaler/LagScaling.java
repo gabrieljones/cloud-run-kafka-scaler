@@ -48,10 +48,11 @@ public final class LagScaling {
    * @param lagTarget The configured lag target.
    * @param currentInstanceCount The current number of instances.
    * @param currentLag The current lag.
+   * @param partitionCount The number of partitions for the topic.
    * @return A recommendation for the number of instances.
    */
   public static Recommendation makeRecommendation(
-      MetricTarget lagTarget, int currentInstanceCount, long currentLag) {
+      MetricTarget lagTarget, int currentInstanceCount, long currentLag, int partitionCount) {
     if (currentLag <= lagTarget.activationThreshold()) {
       logger.atInfo().log(
           "[LAG] Scaling inactive, current lag: %d, activation lag threshold: %d",
@@ -71,6 +72,19 @@ public final class LagScaling {
       logger.atInfo().log("[LAG] Within tolerance, no change");
     } else {
       recommendedInstanceCount = (int) Math.ceil(max(currentInstanceCount, 1) * scalingFactor);
+      // Ensure we never recommend more instances than partitions
+      recommendedInstanceCount = Math.min(recommendedInstanceCount, partitionCount);
+      // On scale up, ensure that the number of assigned partitions per consumer is reduced
+      if (recommendedInstanceCount > currentInstanceCount && currentInstanceCount > 0) {
+        int prevPartitionsPerConsumer = (int) Math.ceil((double) partitionCount / currentInstanceCount);
+        int newPartitionsPerConsumer = (int) Math.ceil((double) partitionCount / recommendedInstanceCount);
+        if (newPartitionsPerConsumer >= prevPartitionsPerConsumer) {
+          // Only scale up if it reduces partitions per consumer
+          recommendedInstanceCount = (int) Math.ceil((double) partitionCount / (prevPartitionsPerConsumer - 1));
+          // Clamp to partition count
+          recommendedInstanceCount = Math.min(recommendedInstanceCount, partitionCount);
+        }
+      }
       logger.atInfo().log("[LAG] Recommended instance count: %d", recommendedInstanceCount);
     }
 

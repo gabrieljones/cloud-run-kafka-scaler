@@ -142,7 +142,8 @@ java_library(
         "@maven//:com_google_cloud_google_cloud_monitoring",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",
-        "@maven//:com_google_protobuf_protobuf_java_util",
+        "@maven//:com_google_protobuf_protobuf_java_4_26_1",
+        "@maven//:com_google_protobuf_protobuf_java_util_4_26_1",
     ],
 )
 

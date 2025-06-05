@@ -158,7 +158,7 @@ public class Scaler {
     LagScaling.Recommendation lagBasedRecommendation = null;
     if (lagTarget != null) {
       lagBasedRecommendation =
-          LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag);
+          LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag, lagPerPartition.size());
     }
 
     CpuScaling.Recommendation cpuBasedRecommendation = null;

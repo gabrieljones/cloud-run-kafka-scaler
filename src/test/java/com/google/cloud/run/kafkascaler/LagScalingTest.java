@@ -39,7 +39,7 @@ public final class LagScalingTest {
     long currentLag = 1050;
 
     LagScaling.Recommendation actual =
-        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag);
+        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag, 100);
     assertThat(actual.isActive()).isFalse();
     assertThat(actual.recommendedInstanceCount()).isEqualTo(0);
   }
@@ -57,7 +57,7 @@ public final class LagScalingTest {
     long currentLag = 1050;
 
     LagScaling.Recommendation actual =
-        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag);
+        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag, 100);
     assertThat(actual.isActive()).isTrue();
     assertThat(actual.recommendedInstanceCount()).isEqualTo(100);
   }
@@ -75,7 +75,7 @@ public final class LagScalingTest {
     long currentLag = 1100;
 
     LagScaling.Recommendation actual =
-        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag);
+        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag, 100);
     assertThat(actual.isActive()).isTrue();
     assertThat(actual.recommendedInstanceCount()).isEqualTo(100);
   }
@@ -93,7 +93,7 @@ public final class LagScalingTest {
     long currentLag = 900;
 
     LagScaling.Recommendation actual =
-        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag);
+        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag, 100);
     assertThat(actual.isActive()).isTrue();
     assertThat(actual.recommendedInstanceCount()).isEqualTo(100);
   }
@@ -111,7 +111,7 @@ public final class LagScalingTest {
     long currentLag = 1101;
 
     LagScaling.Recommendation actual =
-        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag);
+        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag, 100);
     assertThat(actual.isActive()).isTrue();
     assertThat(actual.recommendedInstanceCount()).isEqualTo(111);
   }
@@ -129,7 +129,7 @@ public final class LagScalingTest {
     long currentLag = 899;
 
     LagScaling.Recommendation actual =
-        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag);
+        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag, 100);
     assertThat(actual.isActive()).isTrue();
     assertThat(actual.recommendedInstanceCount()).isEqualTo(90);
   }
@@ -147,7 +147,7 @@ public final class LagScalingTest {
     long currentLag = 1999;
 
     LagScaling.Recommendation actual =
-        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag);
+        LagScaling.makeRecommendation(lagTarget, currentInstanceCount, currentLag, 2);
     assertThat(actual.isActive()).isTrue();
     assertThat(actual.recommendedInstanceCount()).isEqualTo(2);
   }
